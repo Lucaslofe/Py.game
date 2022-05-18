@@ -1,5 +1,4 @@
-#inicio do projeto final
-#fase de testes
+#codigo das cores randomizadas
 import sys
 import pygame
 import random
