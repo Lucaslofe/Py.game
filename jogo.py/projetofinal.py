@@ -26,11 +26,14 @@ while game:
         # ----- Verifica consequências
         if event.type == pygame.QUIT:
             game = False
+        if event.type == pygame.KEYUP:
+            game = False
+            
 
     # ----- Gera saídas
     window.fill((255, 255, 255))  # Preenche com a cor branca
     window.blit(text, (420, 40))
-    window.blit(image,(400,100))
+    window.blit(image,(400,150))
     window.blit(text2, (380, 500))
     #cor = (0,255,0)
     #vertices = [(400,400),(700,400),(700,500),(400,500)]
