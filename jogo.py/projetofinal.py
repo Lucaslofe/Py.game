@@ -26,12 +26,14 @@ image3 = pygame.image.load("fundo.jpg").convert()
 image3 = pygame.transform.scale(image3, (xt,yt)) 
 esteira = pygame.image.load("esteira.jpg").convert()
 esteira = pygame.transform.scale(esteira,(1500,250))
+esteira2 = pygame.transform.scale(esteira,(1500,250))
 clock = pygame.time.Clock()
 fps = 15
 # ===== Loop principal =====
 state = "start_screen"
 vel_esteira = 3
 x_esteira = -200
+x_esteira2 = -1700
 while game:
     clock = pygame.time.Clock()
     clock.tick(fps)
@@ -50,9 +52,14 @@ while game:
     if state == "game_screen":
         window.blit(image3,(0,0))
         window.blit(esteira,(x_esteira,400))
+        window.blit(esteira2,(x_esteira2,400))
         x_esteira += vel_esteira
-        if x_esteira >= 0:
-            x_esteira = -200
+        x_esteira2 += vel_esteira
+        if x_esteira >= 1100:
+            x_esteira = -1900
+        if x_esteira2 >= 1100:
+            x_esteira2 = -1900
+
 
             
             
