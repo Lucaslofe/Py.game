@@ -19,15 +19,20 @@ text2 = font.render('press any button to start', True, (255, 0, 0))
 image = pygame.image.load("pizza.png").convert_alpha()
 image = pygame.transform.scale(image, (300, 300))
 # ===== Loop principal =====
-
+state = "start_screen"
 while game:
     # ----- Trata eventos
     for event in pygame.event.get():
         # ----- Verifica consequências
         if event.type == pygame.QUIT:
             game = False
-        if event.type == pygame.KEYUP:
-            game = False
+        while state == "start_screen":    
+            if event.type == pygame.KEYUP:
+                game = False
+                state = "game_screen"
+            else:
+                break
+            
             
 
     # ----- Gera saídas
