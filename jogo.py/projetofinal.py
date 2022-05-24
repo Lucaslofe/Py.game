@@ -102,4 +102,4 @@ while game:
 # ===== Finalização =====
 pygame.quit()  # Função do PyGame que finaliza os recursos utilizados
 
-#peperoni, palmito, queijo, milho, ervilha, cebola,   
+ 
