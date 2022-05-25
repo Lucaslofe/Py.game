@@ -3,20 +3,20 @@
 import pygame
 
 pygame.init()
-
 # ----- Gera tela principal
 xt = 1100
 yt = 650
 window = pygame.display.set_mode((xt, yt))
 pygame.display.set_caption('py.zza game')
-
+pygame.mouse.set_visible(False)
 # ----- Inicia estruturas de dados
 game = True
 
 # ----- Inicia assets
 font = pygame.font.SysFont(None, 60)
 text = font.render('py.zza game', True, (0, 255, 0))
-score = font.render('score: ', True, (0, 255, 0))
+font = pygame.font.SysFont(None, 34)
+score = font.render('score: ', True, (51, 51, 255))
 font = pygame.font.SysFont(None, 42)
 text2 = font.render('press any button to start', True, (255, 0, 0))
 image = pygame.image.load("pizza.png").convert_alpha()
@@ -28,7 +28,7 @@ image3 = pygame.transform.scale(image3, (xt,yt))
 esteira = pygame.image.load("esteira.jpg").convert()
 esteira = pygame.transform.scale(esteira,(1500,250))
 clock = pygame.time.Clock()
-fps = 30
+fps = 120
 image4 = pygame.image.load("pizzasr.png").convert_alpha()
 image4 = pygame.transform.scale(image4, (200, 200))
 madeira = pygame.image.load("madeira.png").convert_alpha()
@@ -40,7 +40,7 @@ barata = pygame.transform.scale(barata, (75,75))
 sapo = pygame.image.load("sapo.png").convert_alpha()
 sapo = pygame.transform.scale(sapo, (75,75))
 slime = pygame.image.load("slime.png").convert_alpha()
-slime = pygame.transform.scale(slime, (75,75))
+slime = pygame.transform.scale(slime, (75,120))
 zumbi = pygame.image.load("zumbi.png").convert_alpha()
 zumbi = pygame.transform.scale(zumbi, (75,75))
 bota = pygame.image.load("bota.png").convert_alpha()
@@ -48,19 +48,22 @@ bota = pygame.transform.scale(bota, (75,75))
 chip = pygame.image.load("chip.png").convert_alpha()
 chip = pygame.transform.scale(chip, (75,75))
 pimenta = pygame.image.load("pimenta.png").convert_alpha()
-pimenta = pygame.transform.scale(pimenta, (75,75))
+pimenta = pygame.transform.scale(pimenta, (75,120))
 comanda = pygame.image.load("comanda.png").convert_alpha()
 comanda = pygame.transform.scale(comanda, (250, 250))
+cursor = pygame.image.load("cursor.png").convert_alpha()
+cursor = pygame.transform.scale(cursor, (20,20))
 
 # ===== Loop principal =====
 state = "start_screen"
-vel_esteira = 5
+vel_esteira = 3
 x_esteira = -200
 x_esteira2 = -1700
 x_pizza = -250
 while game:
     clock = pygame.time.Clock()
     clock.tick(fps)
+    mx, my = pygame.mouse.get_pos()
     # ----- Trata eventos
     for event in pygame.event.get():
         # ----- Verifica consequências
@@ -81,14 +84,13 @@ while game:
         window.blit(duende,(330, 267))
         window.blit(barata,(440, 267))
         window.blit(sapo,(550, 267))
-        window.blit(slime,(100, 267))
-        window.blit(zumbi,(660, 267))
+        window.blit(slime,(100, 230))
+        window.blit(zumbi,(660,267))   
         window.blit(bota,(770, 267))
         window.blit(chip,(880, 267))
-        window.blit(pimenta,(200, 267))
+        window.blit(pimenta,(200, 230))
         window.blit(comanda,(850, 0))
-        window.blit(score, (870, 200))
-
+        window.blit(score, (870, 213))
         x_esteira += vel_esteira
         x_esteira2 += vel_esteira
         x_pizza += vel_esteira
@@ -99,6 +101,13 @@ while game:
         window.blit(image4,(x_pizza,425))
         if x_pizza > 1100:
             x_pizza = -200
+        window.blit(cursor, ((mx), (my)))
+
+
+
+    # Constructor. Pass in the color of the block,
+    # and its x and y position
+
         
         
 
@@ -107,9 +116,7 @@ while game:
             
 
     # ----- Gera saídas
-    #cor = (0,255,0)
-    #vertices = [(400,400),(700,400),(700,500),(400,500)]
-    #pygame.draw.polygon(window,cor,vertices)
+    
     # ----- Atualiza estado do jogo
     pygame.display.update()  # Mostra o novo frame para o jogador
 
