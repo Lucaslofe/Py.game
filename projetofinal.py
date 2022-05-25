@@ -16,6 +16,7 @@ game = True
 # ----- Inicia assets
 font = pygame.font.SysFont(None, 60)
 text = font.render('py.zza game', True, (0, 255, 0))
+score = font.render('score: ', True, (0, 255, 0))
 font = pygame.font.SysFont(None, 42)
 text2 = font.render('press any button to start', True, (255, 0, 0))
 image = pygame.image.load("pizza.png").convert_alpha()
@@ -86,6 +87,7 @@ while game:
         window.blit(chip,(880, 267))
         window.blit(pimenta,(200, 267))
         window.blit(comanda,(850, 0))
+        window.blit(score, (870, 200))
 
         x_esteira += vel_esteira
         x_esteira2 += vel_esteira
