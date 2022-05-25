@@ -33,7 +33,7 @@ image4 = pygame.transform.scale(image4, (200, 200))
 madeira = pygame.image.load("madeira.png").convert_alpha()
 madeira = pygame.transform.scale(madeira,(1100,200))
 duende = pygame.image.load("duende.png").convert_alpha()
-duende = pygame.transform.scale(duende, (1,1))
+duende = pygame.transform.scale(duende, (75,75))
 barata = pygame.image.load("barata.png").convert_alpha()
 barata = pygame.transform.scale(barata, (1,1))
 sapo = pygame.image.load("sapo.png").convert_alpha()
@@ -76,6 +76,7 @@ while game:
         window.blit(esteira,(x_esteira,400))
         window.blit(esteira,(x_esteira2,400))
         window.blit(madeira,(0,200))
+        window.blit(duende,(150, 267))
         x_esteira += vel_esteira
         x_esteira2 += vel_esteira
         x_pizza += vel_esteira
@@ -86,6 +87,7 @@ while game:
         window.blit(image4,(x_pizza,425))
         if x_pizza > 1100:
             x_pizza = -200
+        
         
 
 
