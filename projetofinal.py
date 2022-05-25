@@ -11,7 +11,7 @@ pygame.display.set_caption('py.zza game')
 pygame.mouse.set_visible(False)
 # ----- Inicia estruturas de dados
 game = True
-
+drag = False
 # ----- Inicia assets
 font = pygame.font.SysFont(None, 60)
 text = font.render('py.zza game', True, (0, 255, 0))
@@ -28,7 +28,7 @@ image3 = pygame.transform.scale(image3, (xt,yt))
 esteira = pygame.image.load("esteira.jpg").convert()
 esteira = pygame.transform.scale(esteira,(1500,250))
 clock = pygame.time.Clock()
-fps = 120
+fps = 240
 image4 = pygame.image.load("pizzasr.png").convert_alpha()
 image4 = pygame.transform.scale(image4, (200, 200))
 madeira = pygame.image.load("madeira.png").convert_alpha()
@@ -53,10 +53,12 @@ comanda = pygame.image.load("comanda.png").convert_alpha()
 comanda = pygame.transform.scale(comanda, (250, 250))
 cursor = pygame.image.load("cursor.png").convert_alpha()
 cursor = pygame.transform.scale(cursor, (20,20))
-
+fallvel = 3
+cond = False
+cond2 = True
 # ===== Loop principal =====
 state = "start_screen"
-vel_esteira = 3
+vel_esteira = 1
 x_esteira = -200
 x_esteira2 = -1700
 x_pizza = -250
@@ -69,6 +71,7 @@ while game:
         # ----- Verifica consequências
         if event.type == pygame.QUIT:
             game = False
+           
     if state == "start_screen":    
         window.blit(image2,(0,0))
         window.blit(text, (420, 40))
@@ -102,6 +105,23 @@ while game:
         if x_pizza > 1100:
             x_pizza = -200
         window.blit(cursor, ((mx), (my)))
+        if event.type == pygame.MOUSEBUTTONDOWN:
+            if event.button == 1:
+                if window.blit(duende,(330, 267)).collidepoint(mx,my):
+                    drag = True
+        elif event.type == pygame.MOUSEBUTTONUP:
+            if event.button == 1:
+                drag = False
+                dropx, dropy = pygame.mouse.get_pos()
+                cond = True
+                    
+        if drag == True:
+            window.blit(duende,((mx-50),(my-50)))
+        # elif drag == False and cond == True: (tentativa de fazer o ingrediente cair, mas fica spawnando duende toda vez que clica)
+        #     dropy += fallvel
+        #     window.blit(duende,((dropx-50),(dropy-50)))
+            
+
 
 
 
