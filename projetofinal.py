@@ -184,22 +184,30 @@ while game:
                     
         if drag_duende == True:
             window.blit(duende,((mx-50),(my-50)))
-        # elif drag == False and cond == True: (tentativa de fazer o ingrediente cair, mas fica spawnando duende toda vez que clica)
-        #     dropy += fallvel
-        #     window.blit(duende,((dropx-50),(dropy-50)))
-        elif drag_barata == True:
+        elif drag_duende == False and cond == True: #(tentativa de fazer o ingrediente cair, mas fica spawnando duende toda vez que clica)
+             window.blit(duende,(x_pizza, 450))
+             #dropy += fallvel
+             #window.blit(duende,((dropx-10),(dropy-10)))
+
+        if drag_barata == True:
             window.blit(barata,((mx-50),(my-50)))
-        elif drag_sapo == True:
+
+        if drag_sapo == True:
             window.blit(sapo,((mx-50),(my-50)))
-        elif drag_slime == True:
+
+        if drag_slime == True:
             window.blit(slime,((mx-50),(my-50)))
-        elif drag_zumbi == True:
+
+        if drag_zumbi == True:
             window.blit(zumbi,((mx-50),(my-50)))
-        elif drag_bota == True:
+
+        if drag_bota == True:
             window.blit(bota,((mx-50),(my-50)))
-        elif drag_chip == True:
+
+        if drag_chip == True:
             window.blit(chip,((mx-50),(my-50)))
-        elif drag_pimenta == True:
+
+        if drag_pimenta == True:
             window.blit(pimenta,((mx-50),(my-50)))
 
 
