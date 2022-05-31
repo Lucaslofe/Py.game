@@ -125,6 +125,11 @@ while game:
                     item = Ingrediente(ing[i]['img'], mx, my)
                     selecionado = item
                     all_sprites.add(selecionado)
+                #if r.x > mx and mx > r.right and r.y > my and my < r.bottom:
+                    #item = Ingrediente(ing[i]['img'], mx, my)
+                    #selecionado = item
+                    #all_sprites.remove(ingrediente)
+                
         if event.type == pygame.MOUSEBUTTONUP:
             if selecionado != None:
                 r = pizza.rect
