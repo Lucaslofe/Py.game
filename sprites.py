@@ -28,12 +28,6 @@ class Pizza(pygame.sprite.Sprite):
         self.ingredientes.add(ingrediente)
         ingrediente.speedx = self.speedx
 
-    #def remove_internal(self, ingrediente):
-        #pygame.sprite.Sprite.remove_internal(ingrediente)
-
-    #def blit(self):
-        #self.screen.blit(self.image, self.rect)
-
     def update(self):
         self.rect.x += self.speedx
         if self.rect.x > xt:
