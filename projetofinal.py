@@ -83,6 +83,7 @@ for k, v in ing.items():
     all_ingredientes.add(ingrediente)
     all_sprites.add(ingrediente)
 
+
 pizza = Pizza(pizzavazia_img, -100, 428)
 all_sprites.add(pizza)
 
@@ -125,16 +126,18 @@ while game:
                     item = Ingrediente(ing[i]['img'], mx, my)
                     selecionado = item
                     all_sprites.add(selecionado)
-                #if r.x > mx and mx > r.right and r.y > my and my < r.bottom:
-                    #item = Ingrediente(ing[i]['img'], mx, my)
-                    #selecionado = item
-                    #all_sprites.remove(ingrediente)
+                if r.x > mx and mx > r.right and r.y > my and my < r.bottom:
+                    item = Ingrediente(ing[i]['img'], mx, my)
+                    selecionado = item
+                    all_sprites.remove(ingrediente)
                 
         if event.type == pygame.MOUSEBUTTONUP:
             if selecionado != None:
                 r = pizza.rect
                 if r.x <= mx and mx <= r.right and r.y <= my and my <= r.bottom:
                     pizza.add(selecionado)
+                else:
+                    selecionado.kill()
             selecionado = None
 
         window.blit(image3,(0,0))
@@ -151,8 +154,13 @@ while game:
         if x_esteira2 >= 1100:
             x_esteira2 = -1900
 #        window.blit(image4,(x_pizza,425))
-        if x_pizza > 1100:
+        if x_pizza > 1300:
             x_pizza = -200
+            #for ing_na_pizza in pizza:
+                #ing_na_pizza.kill()      #está zuando o jogo esse for
+
+            
+            
         
         
         window.blit(cursor, ((mx), (my)))
@@ -181,4 +189,9 @@ pygame.quit()  # Função do PyGame que finaliza os recursos utilizados
 
 
 
- 
+ #o que falta? 
+ # a pizza deve zerar quando termina de passar na esteira
+ #score e contagem de score
+ # ingredientes na comanda
+ # cursor na frente de tudo
+ #aumenta a velocidade da esteira e da pizza conforme aumenta o score
