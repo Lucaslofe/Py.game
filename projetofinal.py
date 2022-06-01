@@ -156,18 +156,12 @@ while game:
 #        window.blit(image4,(x_pizza,425))
         if x_pizza > 1300:
             x_pizza = -200
-            #for ing_na_pizza in pizza:
-                #ing_na_pizza.kill()      #está zuando o jogo esse for
-
-            
-            
-        
-        
-        window.blit(cursor, ((mx), (my)))
-                    
-
+            pizza.ingredientes.empty()
+             
+                 
         all_sprites.update()
         all_sprites.draw(window)
+        window.blit(cursor, ((mx), (my)))
 
     # Constructor. Pass in the color of the block,
     # and its x and y position
@@ -190,8 +184,7 @@ pygame.quit()  # Função do PyGame que finaliza os recursos utilizados
 
 
  #o que falta? 
- # a pizza deve zerar quando termina de passar na esteira
+ #a pizza deve zerar quando termina de passar na esteira (a pizza está zerando, mas não a cada passada na tela)
  #score e contagem de score
- # ingredientes na comanda
- # cursor na frente de tudo
+ #ingredientes na comanda
  #aumenta a velocidade da esteira e da pizza conforme aumenta o score
