@@ -84,7 +84,7 @@ for k, v in ing.items():
     all_sprites.add(ingrediente)
 
 
-pizza = Pizza(pizzavazia_img, -100, 428)
+pizza = Pizza(pizzavazia_img, -200, 428)
 all_sprites.add(pizza)
 
 fallvel = 3
@@ -95,7 +95,7 @@ state = "start_screen"
 vel_esteira = 1
 x_esteira = -200
 x_esteira2 = -1700
-x_pizza = -250
+x_pizza = -200
 clock = pygame.time.Clock()
 selecionado = None
 while game:
@@ -154,9 +154,12 @@ while game:
         if x_esteira2 >= 1100:
             x_esteira2 = -1900
 #        window.blit(image4,(x_pizza,425))
-        if x_pizza > 1300:
+        if x_pizza >= 1095:
             x_pizza = -200
             pizza.ingredientes.empty()
+    
+
+            
              
                  
         all_sprites.update()
