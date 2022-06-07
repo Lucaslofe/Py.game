@@ -243,7 +243,7 @@ while game:
             else:
                 pontos += 20
                 vel_esteira += 0.2
-                x_pizza.speedx += 0.2
+                #pizza.speedx += 0.2
                 n=random.randint(1,2)
                 pedido = random.sample(comanda_str, n)
                 print(pedido)
