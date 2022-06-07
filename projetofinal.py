@@ -3,6 +3,7 @@
 import pygame
 from config import *
 from sqlalchemy import false
+import random
 
 from sprites import Ingrediente, Pizza
 
@@ -20,8 +21,8 @@ drag_duende, drag_barata, drag_sapo, drag_slime, drag_zumbi, drag_chip, drag_pim
 # ----- Inicia assets
 font = pygame.font.SysFont(None, 60)
 text_game = font.render('py.zza game', True, (0, 255, 0))
-font = pygame.font.SysFont(None, 34)
-score = font.render('score: ', True, (51, 51, 255))
+#font = pygame.font.SysFont(None, 34)
+#score = font.render('score: ', True, (51, 51, 255)) linha
 font = pygame.font.SysFont(None, 42)
 text_press = font.render('press any button to start', True, (255, 0, 0))
 pizza_img = pygame.image.load("imagens\\pizza.png").convert_alpha()
@@ -55,6 +56,12 @@ chip_img = pygame.image.load("imagens\\chip.png").convert_alpha()
 chip_img = pygame.transform.scale(chip_img, (75,75))
 pimenta_img = pygame.image.load("imagens\\pimenta.png").convert_alpha()
 pimenta_img = pygame.transform.scale(pimenta_img, (75,120))
+molhopimen_img = pygame.image.load("imagens\\molhopimen.png").convert_alpha()
+molhopimen_img = pygame.transform.scale(molhopimen_img, (120,120))
+molhoslime_img = pygame.image.load("imagens\\molhoslime.png").convert_alpha()
+molhoslime_img = pygame.transform.scale(molhoslime_img, (120,120))
+vidas_img = pygame.image.load("imagens\\vidas.png").convert_alpha()
+vidas_img = pygame.transform.scale(vidas_img, (20,20))
 
 comanda = pygame.image.load("imagens\\comanda.png").convert_alpha()
 comanda = pygame.transform.scale(comanda, (250, 250))
@@ -72,10 +79,21 @@ ing = {
     4: { "img": zumbi_img, "x": 660, "y": 267 },
     5: { "img": bota_img, "x": 770, "y": 267 },
     6: { "img": chip_img, "x": 880, "y": 267 },
-    7: { "img": pimenta_img, "x": 100, "y": 230 }
+    7: { "img": pimenta_img, "x": 100, "y": 230 },
+    8: { "img": molhopimen_img, "x": -600, "y": -600 },
+    9: { "img": molhoslime_img, "x": -500, "y": -500 }
 }
 
+
+pontos = 0
+vidas = 3
+comanda_str = ['duende', 'barata', 'sapo', 'zumbi', 'bota', 'chip', 'pimenta', 'slime']
+n=random.randint(1,2)
+pedido = random.sample(comanda_str, n)
+print(pedido)
+
 lista_ingredientes = []
+ingredientes_string = []
 
 for k, v in ing.items():
     ingrediente = Ingrediente(v['img'], v['x'], v['y'])
@@ -98,9 +116,26 @@ x_esteira2 = -1700
 x_pizza = -200
 clock = pygame.time.Clock()
 selecionado = None
+
+
+'''x_ped = 800
+y_ped = 400
+for i in pedido:
+    ped = font.render('{}'.format(i),True,(255,0,0))
+    x_ped+=100
+    y_ped+=100
+    window.blit(ped, (x_ped,y_ped))'''
+
+
+
 while game:
     clock.tick(fps)
     mx, my = pygame.mouse.get_pos()
+    font = pygame.font.SysFont(None, 34)
+    score = font.render('score: {}'.format(pontos), True, (51, 51, 255))
+    font = pygame.font.SysFont(None, 20)
+    lives = font.render('{}'.format(vidas), True, (255, 0, 0))    
+
     # ----- Trata eventos
     for event in pygame.event.get():
         # ----- Verifica consequências
@@ -115,6 +150,7 @@ while game:
         if event.type == pygame.KEYUP:
             state = "game_screen"
     if state == "game_screen":
+        window.blit(vidas_img, (198, 900))
         if selecionado != None:
             selecionado.rect.x = mx
             selecionado.rect.y = my
@@ -130,51 +166,100 @@ while game:
                     item = Ingrediente(ing[i]['img'], mx, my)
                     selecionado = item
                     all_sprites.remove(ingrediente)
+
+        #determinando ingredientes como variaveis
+        duende = Ingrediente(ing[0]['img'], mx, my)
+        barata = Ingrediente(ing[1]['img'], mx, my)
+        sapo = Ingrediente(ing[2]['img'], mx, my)
+        slime = Ingrediente(ing[3]['img'], mx, my)
+        zumbi = Ingrediente(ing[4]['img'], mx, my)
+        bota = Ingrediente(ing[5]['img'], mx, my)
+        chip = Ingrediente(ing[6]['img'], mx, my)
+        pimenta = Ingrediente(ing[7]['img'], mx, my)
                 
         if event.type == pygame.MOUSEBUTTONUP:
             if selecionado != None:
                 r = pizza.rect
                 if r.x <= mx and mx <= r.right and r.y <= my and my <= r.bottom:
                     pizza.add(selecionado)
+                   
+                    if selecionado.image == duende.image:
+                        ingredientes_string.append('duende')
+                    if selecionado.image == barata.image:
+                        ingredientes_string.append('barata')
+                    if selecionado.image == sapo.image:
+                        ingredientes_string.append('sapo')
+                    if selecionado.image == slime.image:
+                        ingredientes_string.append('slime')
+                    if selecionado.image == zumbi.image:
+                        ingredientes_string.append('zumbi')
+                    if selecionado.image == bota.image:
+                        ingredientes_string.append('bota')
+                    if selecionado.image == chip.image:
+                        ingredientes_string.append('chip')
+                    if selecionado.image == pimenta.image:
+                        ingredientes_string.append('pimenta')
+                    
                 else:
                     selecionado.kill()
             selecionado = None
-
+        
+        #dando alguns blits nas imagens
         window.blit(image3,(0,0))
         window.blit(esteira,(x_esteira,400))
         window.blit(esteira,(x_esteira2,400))
         window.blit(madeira,(0,200))
         window.blit(comanda,(850, 0))
         window.blit(score, (870, 213))
+        window.blit(lives, (895, 200))
+        window.blit(vidas_img, (872, 195))
         x_esteira += vel_esteira
         x_esteira2 += vel_esteira
         x_pizza += vel_esteira
+        v=False
+        
         if x_esteira >= 1100:
             x_esteira = -1900
         if x_esteira2 >= 1100:
             x_esteira2 = -1900
-#        window.blit(image4,(x_pizza,425))
-        if x_pizza >= 1095:
+        if x_pizza >= 1098:
             x_pizza = -200
             pizza.ingredientes.empty()
+            #for a in range(len(all_sprites)):
+                #lista_ingredientes.append(a)
+                #print(lista_ingredientes)
+            for i in ingredientes_string:
+                if i not in pedido:
+                    v=True
+            for i in pedido:
+                if i not in ingredientes_string:
+                    v = True   
+
+            ingredientes_string = []
     
 
-            
-             
-                 
+            if v:
+                vidas-=1
+            else:
+                pontos += 20
+                vel_esteira += 0.2
+                x_pizza.speedx += 0.2
+                n=random.randint(1,2)
+                pedido = random.sample(comanda_str, n)
+                print(pedido)
+                print(vel_esteira)
+
+            if vidas == 0:
+                game = False
+
+        
+           
         all_sprites.update()
         all_sprites.draw(window)
         window.blit(cursor, ((mx), (my)))
 
     # Constructor. Pass in the color of the block,
     # and its x and y position
-
-        
-        
-
-
-            
-            
 
     # ----- Gera saídas
     
@@ -187,7 +272,6 @@ pygame.quit()  # Função do PyGame que finaliza os recursos utilizados
 
 
  #o que falta? 
- #a pizza deve zerar quando termina de passar na esteira (a pizza está zerando, mas não a cada passada na tela)
  #score e contagem de score
  #ingredientes na comanda
  #aumenta a velocidade da esteira e da pizza conforme aumenta o score
