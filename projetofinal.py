@@ -1,5 +1,7 @@
 # ===== Inicialização =====
 # ----- Importa e inicia pacotes
+from doctest import script_from_examples
+from bs4 import Script
 import pygame
 from config import *
 from sqlalchemy import false
@@ -39,7 +41,6 @@ pizzavazia_img = pygame.image.load("imagens\\pizzasr.png").convert_alpha()
 pizzavazia_img = pygame.transform.scale(pizzavazia_img, (200, 200))
 madeira = pygame.image.load("imagens\\madeira.png").convert_alpha()
 madeira = pygame.transform.scale(madeira,(1100,200))
-
 duende_img = pygame.image.load("imagens\\duende.png").convert_alpha()
 duende_img = pygame.transform.scale(duende_img, (75,75))
 barata_img = pygame.image.load("imagens\\barata1.png").convert_alpha()
@@ -61,7 +62,7 @@ molhopimen_img = pygame.transform.scale(molhopimen_img, (120,120))
 molhoslime_img = pygame.image.load("imagens\\molhoslime.png").convert_alpha()
 molhoslime_img = pygame.transform.scale(molhoslime_img, (120,120))
 vidas_img = pygame.image.load("imagens\\vidas.png").convert_alpha()
-vidas_img = pygame.transform.scale(vidas_img, (20,20))
+vidas_img = pygame.transform.scale(vidas_img, (30,30))
 
 comanda = pygame.image.load("imagens\\comanda.png").convert_alpha()
 comanda = pygame.transform.scale(comanda, (250, 250))
@@ -135,7 +136,6 @@ while game:
     score = font.render('score: {}'.format(pontos), True, (51, 51, 255))
     font = pygame.font.SysFont(None, 20)
     lives = font.render('{}'.format(vidas), True, (255, 0, 0))    
-
     # ----- Trata eventos
     for event in pygame.event.get():
         # ----- Verifica consequências
@@ -211,7 +211,7 @@ while game:
         window.blit(madeira,(0,200))
         window.blit(comanda,(850, 0))
         window.blit(score, (870, 213))
-        window.blit(lives, (895, 200))
+        window.blit(lives, (905, 200))
         window.blit(vidas_img, (872, 195))
         x_esteira += vel_esteira
         x_esteira2 += vel_esteira
@@ -250,14 +250,39 @@ while game:
                 print(vel_esteira)
 
             if vidas == 0:
-                game = False
-
+                state = "end_screen"
+                pontos = 0
+                vidas = 3
+                el_esteira = 1
         
-           
         all_sprites.update()
         all_sprites.draw(window)
         window.blit(cursor, ((mx), (my)))
-
+    
+    if state == "end_screen":
+        window.fill((69,69,69))
+        font = pygame.font.SysFont("bauhaus93", 108)
+        game_over = font.render("GAME OVER",True,(255,25,0))
+        font = pygame.font.SysFont(None, 46)
+        exit = font.render("Press [E] to exit",True,(226,247,24))
+        play_again = font.render("Press [R] to restart",True,(26,255,90))
+        window.blit(game_over,(250,200))
+        window.blit(exit, (200,400))
+        window.blit(play_again,(550, 400))
+        
+    
+        pressed = pygame.key.get_pressed()
+        if pressed[pygame.K_e]:
+            game = False
+        elif pressed[pygame.K_r]:
+            state = "game_screen"
+            pontos = 0
+            vidas = 3
+            vel_esteira = 1
+        
+        
+        
+        
     # Constructor. Pass in the color of the block,
     # and its x and y position
 
