@@ -6,10 +6,14 @@ import pygame
 from config import *
 from sqlalchemy import false
 import random
+from pygame import mixer
+
 
 from sprites import Ingrediente, Pizza
 
 pygame.init()
+pygame.mixer.init()
+pygame.mixer.music.load('musicas/songgame.mp3')
 # ----- Gera tela principal
 xt = 1100
 yt = 650
@@ -18,13 +22,11 @@ pygame.display.set_caption('py.zza game')
 pygame.mouse.set_visible(False)
 # ----- Inicia estruturas de dados
 game = True
-#drag = False (comentada pq estava dando erro)
 drag_duende, drag_barata, drag_sapo, drag_slime, drag_zumbi, drag_chip, drag_pimenta, drag_bota = False, False, False, False, False, False, False, False
 # ----- Inicia assets
 font = pygame.font.SysFont(None, 60)
 text_game = font.render('py.zza game', True, (0, 255, 0))
-#font = pygame.font.SysFont(None, 34)
-#score = font.render('score: ', True, (51, 51, 255)) linha
+
 font = pygame.font.SysFont(None, 42)
 text_press = font.render('press any button to start', True, (255, 0, 0))
 pizza_img = pygame.image.load("imagens\\pizza.png").convert_alpha()
@@ -36,7 +38,7 @@ image3 = pygame.transform.scale(image3, (xt,yt))
 esteira = pygame.image.load("imagens\\esteira.jpg").convert()
 esteira = pygame.transform.scale(esteira,(1500,250))
 clock = pygame.time.Clock()
-fps = 240
+fps = 60
 pizzavazia_img = pygame.image.load("imagens\\pizzasr.png").convert_alpha()
 pizzavazia_img = pygame.transform.scale(pizzavazia_img, (200, 200))
 madeira = pygame.image.load("imagens\\madeira.png").convert_alpha()
@@ -62,7 +64,7 @@ molhopimen_img = pygame.transform.scale(molhopimen_img, (120,120))
 molhoslime_img = pygame.image.load("imagens\\molhoslime.png").convert_alpha()
 molhoslime_img = pygame.transform.scale(molhoslime_img, (120,120))
 vidas_img = pygame.image.load("imagens\\vidas.png").convert_alpha()
-vidas_img = pygame.transform.scale(vidas_img, (30,30))
+vidas_img = pygame.transform.scale(vidas_img, (25,25))
 
 comanda = pygame.image.load("imagens\\comanda.png").convert_alpha()
 comanda = pygame.transform.scale(comanda, (250, 250))
@@ -89,9 +91,8 @@ ing = {
 pontos = 0
 vidas = 3
 comanda_str = ['duende', 'barata', 'sapo', 'zumbi', 'bota', 'chip', 'pimenta', 'slime']
-n=random.randint(1,2)
+n=random.randint(1,4)
 pedido = random.sample(comanda_str, n)
-print(pedido)
 
 lista_ingredientes = []
 ingredientes_string = []
@@ -111,7 +112,7 @@ cond = False
 cond2 = True
 # ===== Loop principal =====
 state = "start_screen"
-vel_esteira = 1
+vel_esteira = 3
 x_esteira = -200
 x_esteira2 = -1700
 x_pizza = -200
@@ -119,15 +120,9 @@ clock = pygame.time.Clock()
 selecionado = None
 
 
-'''x_ped = 800
-y_ped = 400
-for i in pedido:
-    ped = font.render('{}'.format(i),True,(255,0,0))
-    x_ped+=100
-    y_ped+=100
-    window.blit(ped, (x_ped,y_ped))'''
 
-
+mixer.music.set_volume(0.8)
+mixer.music.play()
 
 while game:
     clock.tick(fps)
@@ -136,6 +131,8 @@ while game:
     score = font.render('score: {}'.format(pontos), True, (51, 51, 255))
     font = pygame.font.SysFont(None, 20)
     lives = font.render('{}'.format(vidas), True, (255, 0, 0))    
+
+
     # ----- Trata eventos
     for event in pygame.event.get():
         # ----- Verifica consequências
@@ -150,7 +147,7 @@ while game:
         if event.type == pygame.KEYUP:
             state = "game_screen"
     if state == "game_screen":
-        window.blit(vidas_img, (198, 900))
+        window.blit(vidas_img, (194, 900))
         if selecionado != None:
             selecionado.rect.x = mx
             selecionado.rect.y = my
@@ -243,18 +240,30 @@ while game:
             else:
                 pontos += 20
                 vel_esteira += 0.2
-                #pizza.speedx += 0.2
-                n=random.randint(1,2)
+                pizza.speedx += 0.2
+                n=random.randint(1,4)
                 pedido = random.sample(comanda_str, n)
-                print(pedido)
-                print(vel_esteira)
+
+                x_ped = 100
+                y_ped = 400
+                for i in pedido:
+                    ped = font.render('{}'.format(i),True,(255,0,0))
+                    y_ped+=100
+                    window.blit(ped, (x_ped,y_ped))
 
             if vidas == 0:
                 state = "end_screen"
                 pontos = 0
                 vidas = 3
-                el_esteira = 1
+                vel_esteira = 3
         
+        x_ped = 880
+        y_ped = 80
+        for i in pedido:
+            ped = font.render(f'{i}',True,(0,0,0))
+            window.blit(ped, (x_ped,y_ped))
+            y_ped+=15
+
         all_sprites.update()
         all_sprites.draw(window)
         window.blit(cursor, ((mx), (my)))
@@ -278,13 +287,8 @@ while game:
             state = "game_screen"
             pontos = 0
             vidas = 3
-            vel_esteira = 1
-        
-        
-        
-        
-    # Constructor. Pass in the color of the block,
-    # and its x and y position
+            vel_esteira = 3
+            
 
     # ----- Gera saídas
     
@@ -294,9 +298,3 @@ while game:
 # ===== Finalização =====
 pygame.quit()  # Função do PyGame que finaliza os recursos utilizados
 
-
-
- #o que falta? 
- #score e contagem de score
- #ingredientes na comanda
- #aumenta a velocidade da esteira e da pizza conforme aumenta o score
