@@ -4,7 +4,7 @@ PY.ZZA GAME!!
 Membros:
 -João Otávio Gentil Palma
 -Lucas Ferreira Lopes
--Leo
+-Leonardo Paloschi
 
 Linguagem utilizada: Python (100%)
 
