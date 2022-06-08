@@ -25,5 +25,12 @@ Requisitos:
 -Instalar a biblioteca Pygame
 -Clonar o repositório
 
+Vídeo
+
+https://user-images.githubusercontent.com/103431544/172638617-901489a0-275a-44b8-9341-2051ad0701cd.mp4
+
+Música usada no jogo:
+
+https://www.youtube.com/watch?v=NTmM-ozfouI
 
 
